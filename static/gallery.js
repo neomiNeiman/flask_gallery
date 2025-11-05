@@ -2,6 +2,7 @@ const selected = new Set();
 const uploadArea = document.getElementById('uploadArea');
 const fileInput = document.getElementById('fileInput');
 const gallery = document.getElementById('gallery');
+const clearGalleryBtn = document.getElementById('clearGalleryBtn');
 
 // הגדרת גלריה
 let galleryImgs = Array.from(document.querySelectorAll('.image-container img'));
@@ -149,4 +150,16 @@ modalImg.addEventListener('click', () => {
     imgContainer.classList.add('selected');
   }
   updateBorder();
+});
+
+clearGalleryBtn.addEventListener('click', async () => {
+  if (!confirm('האם אתה בטוח שברצונך למחוק את כל התמונות?')) return;
+
+  const response = await fetch('/clear_gallery', { method: 'POST' });
+  const data = await response.json();
+  alert(data.message);
+
+  // רוקן את הגלריה בדף
+  gallery.innerHTML = '';
+  selected.clear();
 });
