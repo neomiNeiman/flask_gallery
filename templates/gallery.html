@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>בחירת תמונות</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>גלריה</h1>
+
+<!-- אזור העלאה עם Drag & Drop -->
+<div class="upload-form" id="uploadArea">
+  <label class="upload-label">
+    📸 בחר תמונות מהמחשב או גרור לכאן
+    <input id="fileInput" type="file" name="images" multiple accept="image/*" hidden>
+  </label>
+</div>
+
+<!-- גלריית התמונות -->
+<div class="gallery" id="gallery">
+  {% for image in images %}
+  <div class="image-container" data-name="{{ image }}">
+    <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="{{ image }}">
+    <div class="image-name">{{ image }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- כפתורי פעולה -->
+<button id="downloadBtn">שמור בחירות</button>
+
+<!-- Modal לתצוגה גדולה -->
+<div id="imageModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+  <span id="closeModal" style="position:absolute; top:20px; right:40px; font-size:40px; color:white; cursor:pointer;">&times;</span>
+  <span id="prevImg" style="position:absolute; top:50%; left:20px; font-size:50px; color:white; cursor:pointer;">&#10094;</span>
+  <span id="nextImg" style="position:absolute; top:50%; right:20px; font-size:50px; color:white; cursor:pointer;">&#10095;</span>
+  <img id="modalImage" src="" style="max-width:90%; max-height:90%; border-radius:10px; cursor:pointer;">
+</div>
+
+<!-- קישור ל־JS נפרד -->
+<script src="{{ url_for('static', filename='gallery.js') }}"></script>
+
+</body>
+</html>
